@@ -121,7 +121,7 @@ public class FabricaDeTrajes implements IFabricaDeTrajes {
         if (componentesEnAlmacen.isEmpty()) {
             System.out.println("No hay componentes en el almacén.");
         } else {
-            System.out.println("************* Lista de Coponentes ***********");
+            System.out.println("***** Lista de Coponentes *****");
             componentesEnAlmacen.forEach(System.out::println);
         }
     }
@@ -192,7 +192,7 @@ public class FabricaDeTrajes implements IFabricaDeTrajes {
         if (trajesEnAlmacen.isEmpty()) {
             System.out.println("No hay trajes en el almacén.");
         } else {
-            System.out.println("************* Trajes en el Almacen *********");
+            System.out.println("***** Trajes en el Almacen ***");
             trajesEnAlmacen.forEach(System.out::println);
         }
     }
@@ -295,12 +295,38 @@ public class FabricaDeTrajes implements IFabricaDeTrajes {
         return componentesEnAlmacen.stream().filter(c -> c.getId() == id).findFirst().orElse(null);
     }
 
+    public void mostrarCantidadComponentesPorSubclase() {
+        int chaquetaCount = 0;
+        int blusaCount = 0;
+        int faldaCount = 0;
+        int pantalonCount = 0;
+
+        for (Componente componente : componentesEnAlmacen) {
+            if (componente instanceof Chaqueta) {
+                chaquetaCount++;
+            } else if (componente instanceof Blusa) {
+                blusaCount++;
+            } else if (componente instanceof Falda) {
+                faldaCount++;
+            } else if (componente instanceof Pantalon) {
+                pantalonCount++;
+            }
+        }
+
+        System.out.println("Cantidad de componentes por subclase:");
+        System.out.println("Chaqueta: " + chaquetaCount);
+        System.out.println("Blusa: " + blusaCount);
+        System.out.println("Falda: " + faldaCount);
+        System.out.println("Pantalón: " + pantalonCount);
+    }
+
     public void escribirMenu() {
         System.out.println("MENU FABRICA TRAJES");
         System.out.println("1.- Añadir Componente a almacén");
         System.out.println("2.- Listar Componentes del almacén");
         System.out.println("3.- Crear traje y añadir a almacén");
         System.out.println("4.- Listar trajes del almacén");
+        System.out.println("5.- Mostrar cantidad de componentes por subclase");
         System.out.println("7.- Activar/Desactivar las rebajas");
         System.out.println("8.- Crear envío");
         System.out.println("9.- Crear componentes de prueba");
@@ -331,6 +357,9 @@ public class FabricaDeTrajes implements IFabricaDeTrajes {
                     case 4:
                         fabrica.listarTrajes();
                         break;
+                    case 5: // primer reuqerimiento Nueva opción para mostrar la cantidad de componentes por subclase.
+                        fabrica.mostrarCantidadComponentesPorSubclase();
+                        break;
                     case 7:
                         fabrica.activarDesactivarRebajas();
                         break;
@@ -354,5 +383,4 @@ public class FabricaDeTrajes implements IFabricaDeTrajes {
 
         scanner.close();
     }
-
 }
